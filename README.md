@@ -301,10 +301,27 @@ When the image has been saved display toast message and restart the preview.
  ```
  
  ## References
- Camera API  :   Android Developers. (n.d.). Retrieved November 29, 2019, from https://developer.android.com/guide/topics/media/camera.
+ 
+ android.hardware.camera2. (n.d.). Retrieved from https://developer.android.com/reference/android/hardware/camera2/package-summary
+ 
+ Camera API. (n.d.). Retrieved from https://developer.android.com/guide/topics/media/camera
+ 
+ What the hell is Camera2 API and why should I know about it? (2017, June 17). Retrieved from https://smartfilming.blog/2017/06/17/what-the-hell-is-camera2-api-and-why-should-i-know-about-it/
+ 
+ Walker, J. (2019, September 19). Android Camera2Basic Sample. Retrieved from https://github.com/googlearchive/android-Camera2Basic
+ 
+ Dao, H. T. (2015, June 27). Android Camera2 API by Huyen Tue . Retrieved from https://www.youtube.com/watch?v=KhqGphh6KPE
+ 
+ Kotwal, A. (2014, July 28). DevBytes: Android L Developer Preview - Camera2 API. Retrieved from https://www.youtube.com/watch?v=Xtp3tH27OFs&t=300s
+ 
+ East, D. (2016, March 10). How to Camera2 (Android Development Patterns S2 Ep 8). Retrieved from https://www.youtube.com/watch?v=Bi4QjMfSOE0
+ 
+ Android saving file to external storage. (2011, October 25). Retrieved from https://stackoverflow.com/questions/7887078/android-saving-file-to-external-storage
+ 
+ Dziubek, Mateusz . (2017, January 23). The least you can do with Camera2 API. Retrieved from https://android.jlelse.eu/the-least-you-can-do-with-camera2-api-2971c8c81b8b
  
  
- 
+
 
  
  
