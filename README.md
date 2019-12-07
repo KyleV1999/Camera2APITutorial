@@ -163,7 +163,126 @@ This is the function to create the camera preview. First you need to display the
     }
     
   ```
+  This function is called when the button is pressed. Once again get create a CameraManager variable that will connect to the camera and store its information for use. Also get the camera charateristics again with ```getCameraCharacteristics()``` function. Now create and array of Size, that will hold the resolution of the outputed image. The ```ImageReader``` object will output the rendered image onto the TextureView's surface. CaptureRequest.Builder will send the request to take a still image.
   
+  ```java
+  
+  
+  private void takePicture() throws CameraAccessException {
+        if(cameraDevice == null){
+           return;
+        }
+
+        CameraManager manager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
+        CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraDevice.getId()); //Properties describing a CameraDevice.
+
+        Size[] jpegSizes = null;
+
+        jpegSizes = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP).getOutputSizes(ImageFormat.JPEG);
+
+        int width = 640;
+        int height = 480;
+
+        if(jpegSizes!=null && jpegSizes.length>0){
+            width = jpegSizes [0].getWidth();
+            height = jpegSizes [0].getHeight();
+        }
+
+        //Render image data onto surface.
+         final ImageReader reader = ImageReader.newInstance(width,height,ImageFormat.JPEG,1);
+        List<Surface> outputSurfaces = new ArrayList<>(2);
+        outputSurfaces.add(reader.getSurface());
+
+        outputSurfaces.add(new Surface(textureView.getSurfaceTexture()));
+
+        final CaptureRequest.Builder captureBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+        captureBuilder.addTarget(reader.getSurface());
+        captureBuilder.set(CaptureRequest.CONTROL_MODE,CameraMetadata.CONTROL_MODE_AUTO);
+
+        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+        captureBuilder.set(CaptureRequest.JPEG_ORIENTATION,ORIENTATIONS.get(rotation));
+   //continued
+   
+   ```
+   Submit a request for an image to be captured by the camera device.
+   ```java
+   cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
+            @Override
+            public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
+                try {
+                    //Submit a request for an image to be captured by the camera device.
+                    cameraCaptureSession.capture(captureBuilder.build(),captureListener,mBackgroundHandler);
+                } catch (CameraAccessException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+
+            }
+        },mBackgroundHandler);
+        
+```
+
+   
+   
+   Save image to a file when available.
+   
+   ```java
+           //Callback interface for being notified that a new image is available.
+        ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
+            @Override
+            public void onImageAvailable(ImageReader imageReader) {
+                Image image = null;
+
+               image = reader.acquireLatestImage();
+                ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                byte[] bytes = new byte[buffer.capacity()];
+                buffer.get(bytes);
+                try {
+                    save(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally {
+                    if(image!=null){
+                        image.close();
+                    }
+                }
+
+
+            }
+        };
+        
+    ```
+   
+   ```java
+       private void save(byte[] bytes) throws IOException {
+        OutputStream outputStream = null;
+        outputStream = new FileOutputStream(file);
+
+        outputStream.write(bytes);
+
+        outputStream.close();
+    }
+```
+
+When the image has been saved display toast message and restart the preview
+``` java
+        final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
+            @Override
+            public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                super.onCaptureCompleted(session, request, result);
+                Toast.makeText(getApplicationContext(),"Image Saved!",Toast.LENGTH_LONG).show();
+                try {
+                    createCameraPreview();
+                } catch (CameraAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+ ```
  
 
  
