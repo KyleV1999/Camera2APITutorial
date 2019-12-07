@@ -45,7 +45,7 @@ These are the important methods that will be used to implement the camera, displ
 | set (Key <T> key, T value)                                                                                 | CaptureRequest                       | <T> void                | Set a capture request field to a value.                                                     |
   
  ## Example Images
- Here is some example images of a finished app that implements the Camera2 API. This app's layout has a texture view that displays the camera preview as well as a button. When the button is clicked it saves the image to the phone's external storage. 
+ Here is some example images of a finished app that implements the Camera2 API. This app's layout has a texture view that displays the camera preview as well as a button. When the button is clicked it saves the image to the phone's external storage in the root directory. 
  
  ![App in use](Images/cameraWorking.jpg)
  
