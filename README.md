@@ -25,9 +25,9 @@ Here is a breakdown of some of the classes in the ```android.hardware.camera2```
 
 ## Methods & Attributes
 
-These are the important methods that will be used to implement the camrea, display it on a Texture view and prepare the image for saving to external storage.
+These are the important methods that will be used to implement the camera, display it on a Texture view and prepare the image for saving to external storage.
 
-  **Texture View Definition**: The texture view is used to display a content stream such as a video or OpenGL sene.
+  **Texture View Definition**: The texture view is used to display a content stream such as a video or OpenGL scene.
 
 
 | Method                                                                                                     | Class                                | Return Values           | Description                                                                                 |
@@ -46,7 +46,7 @@ These are the important methods that will be used to implement the camrea, displ
   
  ## Example Code
  
-To begin you must remember to give your app premissions to access your device's camera and the ability to write to the external storage in the Android Manifest. You also need to add ```android.hardware.camera2.full``` as a uses-feature to filter your app from devices that do not meet its hardware requirements.
+To begin you must remember to give your app permissions to access your device's camera and the ability to write to the external storage in the Android Manifest. You also need to add ```android.hardware.camera2.full``` as a uses-feature to filter your app from devices that do not meet its hardware requirements.
 
 ```XML
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
@@ -75,7 +75,7 @@ Create a new TextureView.SurfaceTextureListener. When the TextureView's SurfaceT
         //Continued
 ```
 
-Here is the funtion to the camera open camera. A ```CameraManager``` variable that will connect to the camera and store its information for use. You will also need to get the ```cameraId``` for the camera device. This is done with the ```manager.getCameraIdList()[0];``` method. The [0] represents the rear camera. With the camera id, get the camera's characteristics with ```manager.getCameraCharacteristics((cameraId));```. Next store the characteristics in StreamConfigurationMap to set up Surfaces for creating a capture session. Finally open the camera with the openCamera function.
+Here is the function to the camera open camera. A ```CameraManager``` variable that will connect to the camera and store its information for use. You will also need to get the ```cameraId``` for the camera device. This is done with the ```manager.getCameraIdList()[0];``` method. The [0] represents the rear camera. With the camera id, get the camera's characteristics with ```manager.getCameraCharacteristics((cameraId));```. Next store the characteristics in StreamConfigurationMap to set up Surfaces for creating a capture session. Finally open the camera with the openCamera function.
 
 ```java
     private void openCamera() throws CameraAccessException {
@@ -119,7 +119,7 @@ Here is the funtion to the camera open camera. A ```CameraManager``` variable th
         }
         //Continued
   ```
-Next, setup the camera preview. First you need to display the preview on the texture view. After that create a CaptureRequest.Builder for new capture requests, initialized with template for a target use case. Next, a new camera capture session is created by providing the target output set of Surfaces to the camera device. When the camera is doen configuring the session can start processing capture requests.
+Next, setup the camera preview. First you need to display the preview on the texture view. After that create a CaptureRequest.Builder for new capture requests, initialized with template for a target use case. Next, a new camera capture session is created by providing the target output set of Surfaces to the camera device. When the camera is done configuring the session can start processing capture requests.
 
 ```java
     private void createCameraPreview() throws CameraAccessException {
@@ -166,7 +166,7 @@ Next, setup the camera preview. First you need to display the preview on the tex
     }
     
   ```
-This function is called when the button is pressed to capture and image. Once again get create a ```CameraManager``` variable that will connect to the camera and store its information for use. Also get the camera charateristics again with ```getCameraCharacteristics()``` function. Now, create and array of Size[], that will hold the resolution of the outputed image. The ```ImageReader``` object will output the rendered image onto the TextureView's surface. Finally, ```CaptureRequest.Builder``` will send the request to take a still image.
+This function is called when the button is pressed to capture and image. Once again get create a ```CameraManager``` variable that will connect to the camera and store its information for use. Also get the camera characteristics again with ```getCameraCharacteristics()``` function. Now, create and array of Size[], that will hold the resolution of the outputted image. The ```ImageReader``` object will output the rendered image onto the TextureView's surface. Finally, ```CaptureRequest.Builder``` will send the request to take a still image.
   
   ```java  
   
