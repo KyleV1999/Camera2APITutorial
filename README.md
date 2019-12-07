@@ -44,6 +44,15 @@ These are the important methods that will be used to implement the camera, displ
 | addTarget (Surface outputTarget)                                                                           | CaptureRequest.Builder               | void                    | Create add surface to list.                                                                 |
 | set (Key <T> key, T value)                                                                                 | CaptureRequest                       | <T> void                | Set a capture request field to a value.                                                     |
   
+ ## Example Images
+ Here is some example images of a finished app that implements the Camera2 API. This app's layout has a texture view that displays the camera preview as well as a button. When the button is clicked it saves the image to the phone's external storage. 
+ 
+ ![App in use](Images/cameraWorking.jpg)
+ 
+ Output image from app
+ 
+ ![Output](Images/cameraWorking2.jpg)
+  
  ## Example Code
  
 To begin you must remember to give your app permissions to access your device's camera and the ability to write to the external storage in the Android Manifest. You also need to add ```android.hardware.camera2.full``` as a uses-feature to filter your app from devices that do not meet its hardware requirements.
@@ -290,6 +299,11 @@ When the image has been saved display toast message and restart the preview.
             }
         };
  ```
+ 
+ ## References
+ Camera API  :   Android Developers. (n.d.). Retrieved November 29, 2019, from https://developer.android.com/guide/topics/media/camera.
+ 
+ 
  
 
  
