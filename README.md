@@ -54,7 +54,7 @@ To begin you must remember to give your app premissions to access your device's 
     <uses-feature android:name="android.hardware.camera2.full"></uses-feature>
 ```
 
-Create a new TextureView.SurfaceTextureListener. When the TextureView's  SurfaceTexture is ready for use call a function to open the camera.
+Create a new TextureView.SurfaceTextureListener. When the TextureView's SurfaceTexture is ready for use call a function to open the camera.
 
 ```java
  //Create new TextureView.SurfaceTextureListener.
@@ -72,8 +72,10 @@ Create a new TextureView.SurfaceTextureListener. When the TextureView's  Surface
             }
 
         }
+        //Continued
 ```
-Funtion to open camera. Create a CameraManager variable that will connect to the camera and store its information for use. You will also need to get the cameraId for the camera device. With the camera id get the camera's characteristics. Next store the characteristics in StreamConfigurationMap to set up Surfaces for creating a capture session.  Finally open the camera with the openCamera function.
+
+Here is the funtion to the camera open camera. A ```CameraManager``` variable that will connect to the camera and store its information for use. You will also need to get the ```cameraId``` for the camera device. This is done with the ```manager.getCameraIdList()[0];``` method. The [0] represents the rear camera. With the camera id, get the camera's characteristics with ```manager.getCameraCharacteristics((cameraId));```. Next store the characteristics in StreamConfigurationMap to set up Surfaces for creating a capture session. Finally open the camera with the openCamera function.
 
 ```java
     private void openCamera() throws CameraAccessException {
@@ -115,8 +117,9 @@ Funtion to open camera. Create a CameraManager variable that will connect to the
             }
 
         }
+        //Continued
   ```
-This is the function to create the camera preview. First you need to display the preview on the texture view. After that create a CaptureRequest.Builder for new capture requests, initialized with template for a target use case. Next create a new camera capture session by providing the target output set of Surfaces to the camera device. When the camera is doen configureing the session can start processing capture requests.
+Next, setup the camera preview. First you need to display the preview on the texture view. After that create a CaptureRequest.Builder for new capture requests, initialized with template for a target use case. Next, a new camera capture session is created by providing the target output set of Surfaces to the camera device. When the camera is doen configuring the session can start processing capture requests.
 
 ```java
     private void createCameraPreview() throws CameraAccessException {
@@ -163,10 +166,9 @@ This is the function to create the camera preview. First you need to display the
     }
     
   ```
-  This function is called when the button is pressed. Once again get create a CameraManager variable that will connect to the camera and store its information for use. Also get the camera charateristics again with ```getCameraCharacteristics()``` function. Now create and array of Size, that will hold the resolution of the outputed image. The ```ImageReader``` object will output the rendered image onto the TextureView's surface. CaptureRequest.Builder will send the request to take a still image.
+This function is called when the button is pressed to capture and image. Once again get create a ```CameraManager``` variable that will connect to the camera and store its information for use. Also get the camera charateristics again with ```getCameraCharacteristics()``` function. Now, create and array of Size[], that will hold the resolution of the outputed image. The ```ImageReader``` object will output the rendered image onto the TextureView's surface. Finally, ```CaptureRequest.Builder``` will send the request to take a still image.
   
-  ```java
-  
+  ```java  
   
   private void takePicture() throws CameraAccessException {
         if(cameraDevice == null){
@@ -201,11 +203,14 @@ This is the function to create the camera preview. First you need to display the
 
         int rotation = getWindowManager().getDefaultDisplay().getRotation();
         captureBuilder.set(CaptureRequest.JPEG_ORIENTATION,ORIENTATIONS.get(rotation));
-   //continued
+    //Continued
    
    ```
+   
    Submit a request for an image to be captured by the camera device.
+   
    ```java
+   //Part of takePicture() function.
    cameraDevice.createCaptureSession(outputSurfaces, new CameraCaptureSession.StateCallback() {
             @Override
             public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
@@ -228,9 +233,10 @@ This is the function to create the camera preview. First you need to display the
 
    
    
-   Save image to a file when available.
+   Save image to a file when it is available from the ```ImageReader```.
    
    ```java
+            //Part of takePicture() function
            //Callback interface for being notified that a new image is available.
         ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
             @Override
@@ -254,10 +260,9 @@ This is the function to create the camera preview. First you need to display the
 
             }
         };
-        
-    ```
-   
-   ```java
+``` 
+```java
+
        private void save(byte[] bytes) throws IOException {
         OutputStream outputStream = null;
         outputStream = new FileOutputStream(file);
@@ -268,8 +273,10 @@ This is the function to create the camera preview. First you need to display the
     }
 ```
 
-When the image has been saved display toast message and restart the preview
+When the image has been saved display toast message and restart the preview.
+
 ``` java
+        //part of takePicture() function.
         final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
             @Override
             public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
